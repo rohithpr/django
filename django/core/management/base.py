@@ -234,6 +234,7 @@ class BaseCommand:
     output_transaction = False  # Whether to wrap the output in a "BEGIN; COMMIT;"
     requires_migrations_checks = False
     requires_system_checks = '__all__'
+    requires_settings_configured = True
     # Arguments, common to all commands, which aren't defined by the argument
     # parser.
     base_stealth_options = ('stderr', 'stdout')
