@@ -410,7 +410,13 @@ class ManagementUtility:
         elif self.argv[1:] in (['--help'], ['-h']):
             sys.stdout.write(self.main_help_text() + '\n')
         else:
-            self.fetch_command(subcommand).run_from_argv(self.argv)
+            command = self.fetch_command(subcommand)
+            if settings.configured or not command.requires_settings_configured:
+                command.run_from_argv(self.argv)
+            else:
+                raise CommandError(
+                    "Settings have not been configured correctly and it is required to execute this command"
+                ) from self.settings_exception
 
 
 def execute_from_command_line(argv=None):
